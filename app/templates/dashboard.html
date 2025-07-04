@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FASTag Parking - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header sidebar-header-expanded">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" class="sidebar-logo" alt="Logo">
+                <span class="sidebar-title">FASTag</span>
+            </div>
+            <div class="sidebar-unfold-btn" id="sidebarUnfoldBtn" aria-label="Expand sidebar" tabindex="0">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" class="sidebar-logo-unfold" alt="Unfold Sidebar">
+            </div>
+            <div class="sidebar-search">
+                <input type="text" placeholder="Search..." id="sidebarSearch">
+                <i class="fa fa-search search-icon"></i>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="menu-item active"><a href="#" title="Dashboard"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
+                <li class="menu-item"><a href="#" title="Parking"><i class="fa fa-parking"></i> <span>Parking</span></a></li>
+                <li class="menu-item"><a href="#" title="Payments"><i class="fa fa-credit-card"></i> <span>Payments</span></a></li>
+                <li class="menu-item"><a href="#" title="Profile"><i class="fa fa-user"></i> <span>Profile</span></a></li>
+                <li class="menu-item"><a href="#" title="Support"><i class="fa fa-question-circle"></i> <span>Support</span></a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <img src="{{ url_for('static', filename='images/avatar.png') }}" class="user-avatar" alt="User">
+                    <span class="user-name">{{ user.username if user else 'User' }}</span>
+                </div>
+                <button class="sidebar-btn" id="darkModeToggle"><i class="fa fa-moon"></i></button>
+                <a href="{{ url_for('main.logout') }}" class="sidebar-btn logout-btn"><i class="fa fa-sign-out-alt"></i></a>
+            </div>
+        </aside>
+        <main class="dashboard-content">
+            <header class="dashboard-header">
+                <h1>Welcome, {{ user.username if user else 'User' }}!</h1>
+                <div class="dashboard-notifications">
+                    <i class="fa fa-bell"></i><span class="badge">3</span>
+                </div>
+            </header>
+            <section class="dashboard-main">
+                <p>This is your modern FASTag Parking dashboard. Select a menu to get started!</p>
+            </section>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html> 

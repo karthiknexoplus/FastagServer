@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FASTag Parking - Logout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="split left">
+            <div class="centered">
+                <img src="{{ url_for('static', filename='images/logout_image.jpg') }}" alt="Logout Visual" class="side-img-full animate-img animate-fadein">
+            </div>
+        </div>
+        <div class="split right">
+            <div class="form-container animate-form animate-fadein">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="FASTag Parking Logo" class="logo">
+                <h2 class="brand">FASTag Parking</h2>
+                <h3 class="greeting"><i class="fa fa-sign-out-alt"></i> {{ greeting }}, you have been logged out.</h3>
+                <a href="{{ url_for('main.login') }}" class="btn"><i class="fa fa-sign-in-alt"></i> Login Again</a>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+</body>
+</html> 

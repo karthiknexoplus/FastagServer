@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FASTag Parking - Sign Up</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="split left">
+            <img src="{{ url_for('static', filename='images/signup_image.jpg') }}" alt="Signup Visual" class="side-img-full animate-img animate-fadein">
+        </div>
+        <div class="split right">
+            <div class="form-container animate-form animate-fadein">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="FASTag Parking Logo" class="logo">
+                <h2 class="brand">FASTag Parking</h2>
+                <h3 class="greeting">{{ greeting }}, sign up below!</h3>
+                <form method="POST" autocomplete="off">
+                    {{ form.hidden_tag() }}
+                    <div class="input-group icon-group">
+                        <span class="input-icon"><i class="fa fa-user"></i></span>
+                        {{ form.username(class_='input with-icon') }}
+                    </div>
+                    <div class="input-group icon-group">
+                        <span class="input-icon"><i class="fa fa-envelope"></i></span>
+                        {{ form.email(class_='input with-icon') }}
+                    </div>
+                    <div class="input-group icon-group">
+                        <span class="input-icon"><i class="fa fa-lock"></i></span>
+                        {{ form.password(class_='input with-icon') }}
+                    </div>
+                    <div class="input-group icon-group">
+                        <span class="input-icon"><i class="fa fa-lock"></i></span>
+                        {{ form.confirm(class_='input with-icon') }}
+                    </div>
+                    <div class="input-group">
+                        {{ form.submit(class_='btn') }}
+                    </div>
+                </form>
+                <p class="switch-link">Already have an account? <a href="{{ url_for('main.login') }}">Login</a></p>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+</body>
+</html> 
