@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    background: #f6f8fa;
+    color: #222;
+}
+.topnav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1e3c72;
+    padding: 0 2rem;
+    height: 60px;
+    box-shadow: 0 2px 8px rgba(30,60,114,0.08);
+}
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+.nav-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: #fff;
+    padding: 4px;
+    box-shadow: 0 2px 8px rgba(30,60,114,0.10);
+}
+.nav-title {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.nav-menu li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.nav-menu li a.active, .nav-menu li a:hover {
+    background: #2a5298;
+    color: #f9d923;
+}
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+.user-name {
+    color: #fff;
+    font-size: 0.98rem;
+    font-weight: 600;
+}
+.nav-logout {
+    color: #f9d923;
+    font-size: 1.2rem;
+    text-decoration: none;
+    margin-left: 0.5rem;
+    transition: color 0.2s;
+}
+.nav-logout:hover {
+    color: #fff;
+}
+.dashboard-content {
+    max-width: 900px;
+    margin: 3rem auto 0 auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(30,60,114,0.08);
+    padding: 2.5rem 2rem 2rem 2rem;
+}
+.dashboard-header h1 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e3c72;
+    margin-bottom: 1.5rem;
+}
+.dashboard-main {
+    font-size: 1rem;
+}
+@media (max-width: 700px) {
+    .topnav {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        padding: 0.5rem 1rem;
+    }
+    .nav-menu {
+        flex-direction: column;
+        gap: 0.7rem;
+        width: 100%;
+    }
+    .dashboard-content {
+        margin: 1rem;
+        padding: 1rem;
+    }
+} 
