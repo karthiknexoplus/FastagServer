@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, session, current_app
 from werkzeug.security import generate_password_hash, check_password_hash
-from .models import User
+from .models import User, Location, Lane, Reader
 from . import db
 from datetime import datetime
-from .forms import LoginForm, SignupForm
+from .forms import LoginForm, SignupForm, LocationForm, LaneForm
+from sqlalchemy.exc import SQLAlchemyError
 
 main = Blueprint('main', __name__)
 
@@ -74,4 +75,60 @@ def dashboard():
     if 'user_id' in session:
         user = User.query.get(session['user_id'])
         return render_template('dashboard.html', user=user)
-    return redirect(url_for('main.login')) 
+    return redirect(url_for('main.login'))
+
+@main.route('/parking/locations', methods=['GET', 'POST'])
+def parking_locations():
+    form = LocationForm()
+    if form.validate_on_submit():
+        try:
+            location = Location(
+                site_name=form.site_name.data,
+                contact_details=form.contact_details.data,
+                site_address=form.site_address.data
+            )
+            db.session.add(location)
+            db.session.commit()
+            current_app.logger.info(f"Location added: {location.site_name}")
+            flash('Location added successfully!', 'success')
+            return redirect(url_for('main.parking_locations'))
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            current_app.logger.error(f"Error adding location: {e}")
+            flash('Error adding location.', 'danger')
+    locations = Location.query.all()
+    return render_template('location.html', form=form, locations=locations)
+
+@main.route('/parking/lanes', methods=['GET', 'POST'])
+def parking_lanes():
+    locations = Location.query.all()
+    location_choices = [(loc.id, loc.site_name) for loc in locations]
+    form = LaneForm()
+    form.location_id.choices = location_choices
+    if form.validate_on_submit():
+        try:
+            lane = Lane(
+                lane_name=form.lane_name.data,
+                lane_type=form.lane_type.data,
+                controller_ip=form.controller_ip.data,
+                location_id=form.location_id.data
+            )
+            db.session.add(lane)
+            db.session.flush()  # get lane.id before commit
+            for reader_form in form.readers.entries:
+                reader = Reader(
+                    reader_ip=reader_form.form.reader_ip.data,
+                    reader_type=reader_form.form.reader_type.data,
+                    lane_id=lane.id
+                )
+                db.session.add(reader)
+            db.session.commit()
+            current_app.logger.info(f"Lane added: {lane.lane_name} (Location: {lane.location.site_name})")
+            flash('Lane added successfully!', 'success')
+            return redirect(url_for('main.parking_lanes'))
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            current_app.logger.error(f"Error adding lane: {e}")
+            flash('Error adding lane.', 'danger')
+    lanes = Lane.query.all()
+    return render_template('lane.html', form=form, lanes=lanes, locations=locations) 

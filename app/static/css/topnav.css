@@ -109,4 +109,45 @@ body {
         margin: 1rem;
         padding: 1rem;
     }
+}
+
+/* Submenu dropdown styles for Parking menu */
+.menu-item.has-submenu {
+    position: relative;
+}
+.menu-item .submenu {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background: #fff;
+    min-width: 200px;
+    box-shadow: 0 2px 8px rgba(30,60,114,0.10);
+    z-index: 100;
+    border-radius: 0 0 8px 8px;
+    padding: 0.5rem 0;
+}
+.menu-item.open .submenu {
+    display: block;
+}
+.menu-item .submenu a {
+    color: #1e3c72;
+    padding: 0.7rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background 0.2s, color 0.2s;
+}
+.menu-item .submenu a:hover {
+    background: #f6f8fa;
+    color: #2a5298;
+}
+.menu-item .submenu-arrow {
+    margin-left: auto;
+    transition: transform 0.3s;
+}
+.menu-item.open > a .submenu-arrow {
+    transform: rotate(180deg);
 } 

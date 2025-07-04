@@ -1,0 +1,77 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2><i class="fa fa-road"></i> Lanes</h2>
+    <form method="POST" class="card p-3 mb-4 shadow-sm">
+        {{ form.hidden_tag() }}
+        <div class="form-group mb-3">
+            <label for="lane_name"><i class="fa fa-tag"></i> Lane Name</label>
+            {{ form.lane_name(class_='form-control', placeholder='Enter lane name') }}
+        </div>
+        <div class="form-group mb-3">
+            <label for="lane_type"><i class="fa fa-random"></i> Lane Type</label>
+            {{ form.lane_type(class_='form-select') }}
+        </div>
+        <div class="form-group mb-3">
+            <label for="controller_ip"><i class="fa fa-server"></i> Controller IP</label>
+            {{ form.controller_ip(class_='form-control', placeholder='Enter controller IP') }}
+        </div>
+        <div class="form-group mb-3">
+            <label for="location_id"><i class="fa fa-map-marker-alt"></i> Location</label>
+            {{ form.location_id(class_='form-select') }}
+        </div>
+        <div class="form-group mb-3">
+            <label><i class="fa fa-microchip"></i> Readers</label>
+            <div id="readers-list">
+                {% for reader_form in form.readers %}
+                <div class="row mb-2 align-items-end reader-row">
+                    <div class="col-md-5">
+                        {{ reader_form.reader_ip(class_='form-control', placeholder='Reader IP') }}
+                    </div>
+                    <div class="col-md-5">
+                        {{ reader_form.reader_type(class_='form-select') }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button type="button" class="btn btn-outline-secondary btn-sm mt-2" id="add-reader-btn"><i class="fa fa-plus"></i> Add Reader</button>
+        </div>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+    </form>
+    <div class="card shadow-sm">
+        <div class="card-header bg-light"><i class="fa fa-list"></i> Existing Lanes</div>
+        <ul class="list-group list-group-flush">
+            {% for lane in lanes %}
+            <li class="list-group-item">
+                <i class="fa fa-road text-primary me-2"></i>
+                <strong>{{ lane.lane_name }}</strong> ({{ lane.lane_type|capitalize }})<br>
+                <small><i class="fa fa-server"></i> {{ lane.controller_ip }} | <i class="fa fa-map-marker-alt"></i> {{ lane.location.site_name }}</small>
+                <ul class="mt-2">
+                    {% for reader in lane.readers %}
+                    <li><i class="fa fa-microchip"></i> {{ reader.reader_ip }} ({{ reader.reader_type|capitalize }})</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% else %}
+            <li class="list-group-item">No lanes added yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addBtn = document.getElementById('add-reader-btn');
+    if (addBtn) {
+        addBtn.addEventListener('click', function() {
+            const readersList = document.getElementById('readers-list');
+            const count = readersList.querySelectorAll('.reader-row').length;
+            if (count < 4) {
+                const newRow = readersList.children[0].cloneNode(true);
+                newRow.querySelectorAll('input, select').forEach(el => { el.value = ''; });
+                readersList.appendChild(newRow);
+            }
+        });
+    }
+});
+</script>
+{% endblock %} 
